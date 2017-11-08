@@ -1,7 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
-public class PlayerMovement : MonoBehaviour {
+public class PlayerMovement : MonoBehaviour
+{
 	// the player speed
 	public float topSpeed;
 	//tells the direction the player is facing
@@ -21,6 +22,8 @@ public class PlayerMovement : MonoBehaviour {
 	void Start()
 	{
 		anim = GetComponent<Animator>();
+
+        
 
 	}
 
@@ -55,6 +58,8 @@ public class PlayerMovement : MonoBehaviour {
 
 	void Update()
 	{
+        
+
 		if (grounded && Input.GetKeyDown(KeyCode.Space))
         {
             anim.SetBool("Ground", false);
@@ -75,7 +80,11 @@ public class PlayerMovement : MonoBehaviour {
 		transform.localScale = theScale;
 	}
 
-}
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        Debug.DrawRay(hit.point, hit.normal, Color.red, 1.25f);
+    }
 
+}
 
 
