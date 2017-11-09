@@ -1,8 +1,9 @@
-using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
 
-public class PlayerMovement : MonoBehaviour
-{
+public class PlayerMovement : MonoBehaviour {
 	// the player speed
 	public float topSpeed;
 	//tells the direction the player is facing
@@ -17,13 +18,15 @@ public class PlayerMovement : MonoBehaviour
 	public float jumpForce = 700f;
 	// what layer is considered ground
 	public LayerMask whatIsGround;
+	private Rigidbody2D rb;
+
 
 
 	void Start()
 	{
 		anim = GetComponent<Animator>();
+		rb = GetComponent<Rigidbody2D> ();
 
-        
 
 	}
 
@@ -33,6 +36,9 @@ public class PlayerMovement : MonoBehaviour
 
 	void FixedUpdate ()
 	{
+
+
+		rb.AddForce(Vector2.up*-200f);
 		// if the ground transform hit the whatisground with groundradius
 		grounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, whatIsGround);
 
@@ -53,19 +59,17 @@ public class PlayerMovement : MonoBehaviour
 			Flip ();
 		else if (move < 0 && facingRight)
 			Flip ();
-		
+
 	}
 
 	void Update()
 	{
-        
-
 		if (grounded && Input.GetKeyDown(KeyCode.Space))
-        {
-            anim.SetBool("Ground", false);
-            //add jump force
-            GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpForce));
-        }
+		{
+			anim.SetBool("Ground", false);
+			//add jump force
+			GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpForce));
+		}
 	}
 
 	//the function Flip transforms the scale to flip the player object left or right
@@ -80,11 +84,4 @@ public class PlayerMovement : MonoBehaviour
 		transform.localScale = theScale;
 	}
 
-    private void OnControllerColliderHit(ControllerColliderHit hit)
-    {
-        Debug.DrawRay(hit.point, hit.normal, Color.red, 1.25f);
-    }
-
 }
-
-
