@@ -2,8 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour {
+
+    //MOVEMENT 
+
 	// the player speed
 	public float topSpeed;
 	//tells the direction the player is facing
@@ -19,6 +23,13 @@ public class PlayerMovement : MonoBehaviour {
 	// what layer is considered ground
 	public LayerMask whatIsGround;
 	private Rigidbody2D rb;
+
+    //COMBAT
+
+    //player health
+    public int health = 6;
+    // invincible time after player gets hurt
+    public float blinkTime = 2f;
 
 
 
@@ -84,4 +95,51 @@ public class PlayerMovement : MonoBehaviour {
 		transform.localScale = theScale;
 	}
 
+    void Hurt()
+    {
+        // if health is lower than zero, restart game
+        health--;
+        if (health <= 0)
+            Application.LoadLevel(Application.loadedLevel);
+        //if health isnt lower than zero, triggers the blink time
+        else
+            TriggerHurt(blinkTime);
+    }
+
+    public void TriggerHurt(float hurtTime)
+    {
+        StartCoroutine(HurtBlinker(hurtTime));
+    }
+
+    IEnumerator HurtBlinker(float hurtTime)
+    {
+        //ignore collision with enemies
+        int enemyLayer = LayerMask.NameToLayer("Enemy");
+        int playerLayer = LayerMask.NameToLayer("Player");
+        
+
+        Physics2D.IgnoreLayerCollision(enemyLayer,playerLayer);
+        //start looping blinking anim
+        anim.SetLayerWeight(1, 1);
+
+        //wait for invincibility to end
+        yield return new WaitForSeconds(hurtTime);
+        //stops blinking animation and re enable collision
+        Physics2D.IgnoreLayerCollision(enemyLayer, playerLayer,false);
+        anim.SetLayerWeight(1, 0);
+    }
+
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        //if player collides with enemy, calls function Hurt()
+        Enemy enemy = collision.collider.GetComponent<Enemy>();
+        if (enemy != null)
+        {
+            Hurt();
+        }
+    }
+    
+        
+   
 }
