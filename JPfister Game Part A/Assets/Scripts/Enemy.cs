@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour
     private Rigidbody2D rb;
     //the enemy sight start point
     public Transform sightStart;
-    //the enemy sight start point
+    //the enemy sight end point
     public Transform sightEnd;
     //determines with enemy collided with walls/tiles 
     public bool colliding;
