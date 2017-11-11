@@ -16,12 +16,15 @@ public class Enemy : MonoBehaviour
     public bool colliding;
     // layer mask to define what the enemy will perceve as a colision
     public LayerMask detectWhat;
+    //get animator
+    Animator anim;
 
     // Use this for initialization
     void Start()
     {
         // get the component rigidbody2d
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
 
 
     }
@@ -41,5 +44,8 @@ public class Enemy : MonoBehaviour
             transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
             velocity *= -1;
         }
+
+        anim = GetComponent<Animator>();
+
     }
 }

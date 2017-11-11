@@ -25,8 +25,9 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce = 700f;
     // what layer is considered ground
     public LayerMask whatIsGround;
+    //the rigidbody
     private Rigidbody2D rb;
-    private Collider2D playerCol;
+   
 
 
 
@@ -43,7 +44,7 @@ public class PlayerMovement : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        playerCol = GetComponent<Collider2D>();
+        
 
     }
 
@@ -110,6 +111,7 @@ public class PlayerMovement : MonoBehaviour
         health--;
         if (health <= 0)
             Application.LoadLevel(Application.loadedLevel);
+        
         //if health isnt lower than zero, triggers the blink time
         else
             TriggerHurt(blinkTime);
@@ -153,7 +155,7 @@ public class PlayerMovement : MonoBehaviour
         Hurt();
         }
 
-
+        // if player collides with gameobject with layer mask "traps" calls function Hurt()
         if (collision.gameObject.layer == LayerMask.NameToLayer("Traps"))
         {
             Hurt();
