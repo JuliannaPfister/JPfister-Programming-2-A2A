@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public const int maxHealth = 3;
+
     //enemy health
-    public int currentHealth = maxHealth;
+    public int currentHealth;
     // the enemy speed
     public float velocity = 1f;
     //rigidbody
@@ -48,19 +48,26 @@ public class Enemy : MonoBehaviour
             velocity *= -1;
         }
 
-    }
 
-
-    public void TakeDamage(int amount)
-    {
-        currentHealth -= amount;
-        if (currentHealth <= 0)
+        if(currentHealth <= 0)
         {
-            currentHealth = 0;
             Destroy(gameObject);
         }
 
     }
 
+   
+
+
+
+    public void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Weapon")
+        {
+            currentHealth--;
+        }
+
+        
+    }
 
 }
