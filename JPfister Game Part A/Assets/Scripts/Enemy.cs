@@ -62,12 +62,20 @@ public class Enemy : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D other)
     {
+        //if enemy collides with weapon 
         if (other.tag == "Weapon")
-        {
+        {   
+            //loses -1 health
             currentHealth--;
+            //blinks when takes damage
+            anim.SetLayerWeight(1, 1);
         }
+
+        //need to make it stop blinking after 2 secs
 
         
     }
+
+    
 
 }

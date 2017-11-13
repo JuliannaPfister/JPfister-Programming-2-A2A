@@ -142,14 +142,14 @@ public class PlayerMovement : MonoBehaviour
         int playerLayer = LayerMask.NameToLayer("Player");
 
 
-
+        //ignores colision (damage) 
         Physics2D.IgnoreLayerCollision(enemyLayer, playerLayer);
         //start looping blinking anim
         anim.SetLayerWeight(1, 1);
 
         //wait for invincibility to end
         yield return new WaitForSeconds(hurtTime);
-        //stops blinking animation and re enable collision
+        //stops blinking animation and re enable collision (damage)
         Physics2D.IgnoreLayerCollision(enemyLayer, playerLayer, false);
         anim.SetLayerWeight(1, 0);
     }
