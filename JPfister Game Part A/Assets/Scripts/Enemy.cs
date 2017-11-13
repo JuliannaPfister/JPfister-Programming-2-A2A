@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public const int maxHealth = 3;
+    //enemy health
+    public int currentHealth = maxHealth;
     // the enemy speed
     public float velocity = 1f;
     //rigidbody
@@ -45,7 +48,19 @@ public class Enemy : MonoBehaviour
             velocity *= -1;
         }
 
-        anim = GetComponent<Animator>();
+    }
+
+
+    public void TakeDamage(int amount)
+    {
+        currentHealth -= amount;
+        if (currentHealth <= 0)
+        {
+            currentHealth = 0;
+            Destroy(gameObject);
+        }
 
     }
+
+
 }

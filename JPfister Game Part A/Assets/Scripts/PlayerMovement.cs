@@ -27,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask whatIsGround;
     //the rigidbody
     private Rigidbody2D rb;
+
    
 
 
@@ -37,6 +38,10 @@ public class PlayerMovement : MonoBehaviour
     public int health = 6;
     // invincible time after player gets hurt
     public float blinkTime = 2f;
+    //fire point for player attack 1
+    public Transform firePoint;
+    //assign the weapon for attack 1 
+    public GameObject adaga;
 
 
 
@@ -78,6 +83,14 @@ public class PlayerMovement : MonoBehaviour
         else if (move < 0 && facingRight)
             Flip();
 
+
+        //attack 1 button
+        //if left mouse botton is pressed
+        if (Input.GetMouseButtonDown(0))
+        //instantiate the game object adaga on the fire points' position and rotation
+        {
+            Instantiate(adaga, firePoint.position, firePoint.rotation);
+        }
     }
 
     void Update()
